@@ -1,5 +1,4 @@
-# Building Modeling
-## Introduction
+# Introduction
 Accurate modeling of building energy systems is a cornerstone of modern smart building research, enabling applications ranging from energy consumption prediction, demand response, and optimal control. As buildings account for more than 30% of global energy consumption, developing reliable and efficient building models has become increasingly critical for achieving sustainability goals.
 
 Building modeling approaches are broadly categorized into three paradigms, each reflecting a different balance between physical interpretability and data-driven flexibility:
@@ -9,7 +8,7 @@ Building modeling approaches are broadly categorized into three paradigms, each 
 | **[⚫ Black-box Models](#black-box-models)** | Data-driven models that learn building behavior directly from operational data without explicitly modeling the underlying physical processes. They can achieve strong predictive performance, especially with large-scale sensor data, but often lack interpretability and physical consistency. |
 | **[🔘 Gray-box Models](#gray-box-models)** | Hybrid models that combine simplified physical structures with data-driven parameter estimation. They aim to balance interpretability and flexibility, making them useful when partial physical knowledge and measured data are both available. |
 
-## White-box Models
+# White-box Models
 White-box models describe building behavior based on known physical principles. They explicitly model how heat, air, energy, and control signals flow through a building and its HVAC systems, using equations derived from thermodynamics, heat transfer, fluid dynamics, and system control. Unlike purely data-driven models, white-box models do not treat the building as an unknown mapping from inputs to outputs; instead, they attempt to reproduce the actual physical processes that determine indoor conditions and energy consumption.
 
 A key advantage of white-box models is interpretability. Most parameters correspond to real physical quantities, such as wall insulation, thermal mass, ventilation rate, or equipment efficiency. This makes them valuable for simulation, diagnosis, control design, and what-if analysis. At the same time, they often require substantial domain knowledge, detailed building specifications, and calibration effort, which can make them costly to develop and maintain.
@@ -28,7 +27,7 @@ Several mature simulation platforms have been widely used to develop and analyze
 
 In summary, white-box models are powerful tools for physically interpretable building simulation and performance analysis. However, they often require detailed input data, domain expertise, and calibration effort, which can make them difficult to scale. This trade-off provides the motivation for black-box and gray-box modeling approaches that offer greater flexibility in data-rich building applications.
 
-## Black-box Models
+# Black-box Models
 Black-box models learn building thermal dynamics directly from operational data without explicitly modeling the underlying physical processes such as heat conduction, convection, or thermal storage. Instead of constructing equations based on building geometry, material properties, or HVAC system configurations, these models rely on historical input-output data to approximate the mapping between driving variables (e.g., outdoor temperature, solar radiation, HVAC control signals, internal heat gains) and thermal responses (e.g., indoor temperature, zone thermal load).
 
 The general form of a black-box thermal dynamic model can be expressed as:
@@ -42,11 +41,11 @@ Black-box models can achieve strong predictive performance, particularly when la
 This section covers two aspects of black-box modeling for building thermal dynamics. The first part introduces representative model structures commonly used to approximate the thermal dynamics function 
 $f(\cdot)$, ranging from traditional machine learning methods such as support vector regression and gradient boosting trees to deep learning architectures such as MLP, LSTM, GRU, and TCN. The second part discusses model training strategies, including federated learning, end-to-end learning, and explainable AI.
 
-### Model Structures
+## Model Structures
 
 Black-box thermal dynamic models differ mainly in the choice of function approximator used to learn the nonlinear mapping $f(\cdot)$. In building thermal modeling, the input to the model is usually constructed from historical indoor temperatures, control inputs, weather variables, occupancy-related variables, and other measurable disturbances. Depending on how temporal dependencies are represented, black-box model structures can be broadly divided into traditional machine learning models and deep learning models.
 
-#### Support Vector Regression
+### Support Vector Regression
 
 Support Vector Regression (SVR) is one of the commonly used traditional machine learning methods for building thermal dynamics prediction. SVR approximates the nonlinear relationship between input features and thermal responses by mapping the original input space into a high-dimensional feature space through kernel functions. A typical SVR-based thermal model can be written as:
 
@@ -64,7 +63,7 @@ The kernel function allows SVR to capture nonlinear thermal behavior without exp
 
 SVR is suitable for small- to medium-scale datasets and often provides robust prediction performance when the amount of training data is limited. However, its performance depends strongly on feature engineering, kernel selection, and hyperparameter tuning. In addition, SVR does not naturally model long-term temporal dependencies unless lagged variables are manually included in the input feature vector.
 
-#### Tree-based Ensemble Models
+### Tree-based Ensemble Models
 
 Tree-based ensemble models, such as Random Forest, Gradient Boosting Decision Trees, XGBoost, LightGBM, and CatBoost, are widely used for black-box building thermal modeling due to their strong nonlinear fitting ability and relatively low requirement for data preprocessing. These models approximate the thermal dynamics function as an ensemble of decision trees:
 
@@ -78,7 +77,7 @@ Gradient boosting models are particularly effective because they sequentially tr
 
 Compared with neural networks, tree-based models are easier to train and can provide feature importance indicators, which offer a limited degree of interpretability. They are also effective for tabular building operation datasets. However, similar to SVR, temporal dynamics must usually be introduced manually through lagged features, rolling statistics, or window-based input construction. Their extrapolation capability is also limited when the operating condition differs significantly from the training data distribution.
 
-#### Multi-layer Perceptron
+### Multi-layer Perceptron
 
 Multi-layer Perceptron (MLP) is a basic feedforward neural network structure that can approximate complex nonlinear mappings between input features and thermal responses. An MLP-based thermal dynamic model can be expressed as:
 
@@ -92,7 +91,7 @@ A typical MLP consists of an input layer, several hidden layers with nonlinear a
 
 MLP models are simple, flexible, and easy to implement. They are suitable when the thermal dynamics can be approximated from a fixed-length input window. However, because MLPs do not contain an explicit recurrent or temporal mechanism, the temporal dependency of building thermal dynamics must be encoded through handcrafted lagged features. Therefore, the prediction performance of MLP models is highly affected by the choice of input window length and feature construction strategy.
 
-#### Recurrent Neural Networks
+### Recurrent Neural Networks
 
 Building thermal dynamics are inherently time-dependent because indoor temperature is affected not only by current inputs but also by previous thermal states and accumulated heat storage effects. Recurrent Neural Networks (RNNs) are designed to model sequential data by maintaining hidden states that carry information from previous time steps.
 
@@ -110,7 +109,7 @@ where $h_k$ is the hidden state, $x_k$ is the input vector at time step $k$, and
 
 Basic RNNs can model temporal dependencies, but they often suffer from vanishing or exploding gradient problems when learning long-term dependencies. Since building thermal dynamics may involve delayed responses over several hours, more advanced recurrent architectures such as LSTM and GRU are commonly preferred.
 
-#### Long Short-Term Memory Networks
+### Long Short-Term Memory Networks
 
 Long Short-Term Memory (LSTM) is a recurrent neural network architecture designed to capture long-term temporal dependencies. LSTM introduces memory cells and gating mechanisms to control the flow of information over time. This makes it suitable for modeling building thermal inertia, delayed HVAC effects, and the accumulated influence of disturbances.
 
@@ -130,7 +129,7 @@ where $n$ is the sequence length.
 
 LSTM models can automatically learn temporal dependencies from historical data without requiring extensive manual construction of lagged features. They are especially useful for multi-step temperature prediction and predictive control applications. However, LSTM models usually require larger datasets and more careful training than traditional machine learning models. They may also be computationally more expensive and less interpretable.
 
-#### Gated Recurrent Unit Networks
+### Gated Recurrent Unit Networks
 
 Gated Recurrent Unit (GRU) is another recurrent neural network architecture that uses gating mechanisms to capture temporal dependencies. Compared with LSTM, GRU has a simpler structure with fewer parameters, typically using update and reset gates instead of separate input, forget, and output gates.
 
@@ -144,7 +143,7 @@ where $X_k$ is the sequence of historical temperature, control, and disturbance 
 
 GRU models often achieve similar predictive performance to LSTM models while requiring lower computational cost and less training time. This makes GRU attractive for building thermal modeling tasks where the dataset size is moderate or where real-time implementation is needed. Similar to LSTM, GRU can represent delayed thermal responses and temporal correlations, but its learned representation remains difficult to physically interpret.
 
-#### Temporal Convolutional Networks
+### Temporal Convolutional Networks
 
 Temporal Convolutional Networks (TCNs) provide an alternative to recurrent architectures for sequence modeling. Instead of processing time-series data recurrently, TCNs use one-dimensional causal convolutions to capture temporal dependencies. A causal convolution ensures that the prediction at time step $k+1$ only depends on current and past information, avoiding information leakage from future data.
 
@@ -160,7 +159,7 @@ TCNs often use dilated convolutions to enlarge the receptive field, allowing the
 
 Compared with LSTM and GRU, TCNs are easier to parallelize during training and can be more stable for long sequences. They are suitable for both one-step-ahead and multi-step-ahead temperature prediction. However, the choice of receptive field, dilation factor, kernel size, and sequence length can significantly influence model performance.
 
-#### Comparison of Representative Structures
+### Comparison of Representative Structures
 
 Different black-box model structures have different advantages and limitations for building thermal dynamic modeling. Traditional machine learning models, such as SVR and tree-based ensemble models, are generally easier to train and perform well on tabular datasets with carefully designed features. However, they usually require manual construction of lagged variables to represent temporal dependencies.
 
@@ -179,13 +178,13 @@ A summary of representative black-box model structures is shown below.
 
 Overall, the selection of a black-box model structure depends on the available data volume, sampling resolution, prediction horizon, computational resources, and application scenario. For short-term temperature prediction with limited data, SVR or gradient boosting models may be sufficient. For large-scale time-series datasets and applications requiring multi-step prediction, LSTM, GRU, and TCN models are often more suitable.
 
-### Model Training
+## Model Training
 
 After selecting the model structure, the next step is to determine how the black-box thermal dynamic model is trained. In building thermal modeling, the training strategy is not only related to prediction accuracy, but also affects data availability, model generalization, privacy protection, deployment scalability, and interpretability.
 
 Traditional black-box models are usually trained in a centralized supervised learning manner, where operational data from one or multiple buildings are collected and stored in a central database. The model is then optimized to minimize the discrepancy between predicted and measured thermal responses. However, with the increasing deployment of smart meters, building automation systems, and IoT sensors, new training strategies have become important for large-scale building thermal modeling. This section discusses three representative strategies: federated learning, end-to-end learning, and explainable AI.
 
-#### Supervised Learning Formulation
+### Supervised Learning Formulation
 
 Most black-box thermal dynamic models are trained using supervised learning. Given a dataset of historical measurements,
 
@@ -251,7 +250,7 @@ $$
 
 The model is usually trained on a training set, tuned on a validation set, and finally evaluated on a test set. For time-series thermal modeling, the data split should follow chronological order to avoid information leakage from future data.
 
-#### Federated Learning
+### Federated Learning
 
 Federated learning is a distributed training strategy that allows multiple buildings or devices to collaboratively train a shared model without directly sharing their raw operational data. This is particularly useful for building thermal modeling because building operation data may contain sensitive information, such as occupancy patterns, energy usage behavior, and control schedules.
 
@@ -292,7 +291,7 @@ $$
 
 This strategy combines the benefit of cross-building knowledge sharing with the flexibility of building-specific adaptation.
 
-#### End-to-End Learning
+### End-to-End Learning
 
 End-to-end learning refers to a training strategy in which the model directly learns the mapping from raw or minimally processed inputs to the final prediction or control-oriented output. In the context of building thermal dynamics, an end-to-end model can be trained to predict future indoor temperature, zone load, HVAC energy consumption, or even optimal control actions directly from historical measurements.
 
@@ -340,7 +339,7 @@ End-to-end learning offers several advantages. It can exploit large-scale sensor
 
 Nevertheless, end-to-end learning also has limitations. It usually requires a large amount of high-quality data and may be sensitive to changes in data distribution. If the training data do not cover enough operating conditions, the model may perform poorly under unseen weather conditions, abnormal occupancy patterns, or new HVAC control strategies. Moreover, end-to-end models are often difficult to interpret, which may reduce user trust and make fault diagnosis more challenging.
 
-#### Explainable AI
+### Explainable AI
 
 Explainable AI (XAI) aims to improve the transparency and interpretability of black-box models. This is important for building thermal dynamics because model predictions are often used to support energy management, demand response, fault detection, and HVAC control decisions. In these applications, users may need to understand why the model makes a certain prediction, which variables dominate the thermal response, and whether the learned behavior is physically reasonable.
 
@@ -366,7 +365,7 @@ Sensitivity analysis is another useful approach for evaluating whether the learn
 
 Explainable AI can also support model debugging and feature selection. If the explanation results show that the model relies heavily on irrelevant variables or ignores important physical variables, the input feature set or training dataset may need to be revised. In this sense, XAI is not only a visualization tool but also a practical component of the model development workflow.
 
-#### Summary of Training Strategies
+### Summary of Training Strategies
 
 Different training strategies address different challenges in black-box building thermal modeling. Federated learning focuses on privacy-preserving and collaborative training across multiple buildings. End-to-end learning focuses on directly learning complex mappings from data with minimal manual modeling. Explainable AI focuses on understanding, diagnosing, and validating the behavior of trained black-box models.
 
@@ -382,5 +381,5 @@ A summary of these strategies is shown below.
 
 Overall, model training for black-box building thermal dynamics should be designed according to the target application. For single-building prediction with sufficient historical data, centralized supervised learning is usually adequate. For large-scale deployment across multiple buildings with privacy constraints, federated learning provides an attractive solution. For prediction or control tasks with rich sensor data, end-to-end learning can capture complex nonlinear and temporal relationships. Finally, explainable AI should be incorporated to improve model transparency, validate physical plausibility, and increase trust in practical building energy applications.
 
-## Gray-box Models
+# Gray-box Models
 Representative approaches include Physics-Informed Neural Networks (PINNs), which embed governing differential equations as soft constraints during neural network training, and Resistance-Capacitance (RC) thermal network models, which abstract building thermal dynamics into compact equivalent circuits whose parameters are identified from data. These hybrid methods offer improved sample efficiency and interpretability compared to pure black-box approaches, while relaxing the detailed input requirements of white-box simulators.
