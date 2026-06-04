@@ -40,7 +40,7 @@ where $T_k$ denotes the indoor temperature at time step $k$, $u_k$ represents th
 Black-box models can achieve strong predictive performance, particularly when large-scale sensor data is available. However, they typically  lack interpretability and do not guarantee physical consistency (e.g., energy conservation, monotonic temperature response to heating input). Their generalization to unseen operating conditions or building configurations is also limited compared to physics-based approaches.
 
 This section covers two aspects of black-box modeling for building thermal dynamics. The first part introduces representative model structures commonly used to approximate the thermal dynamics function 
-$f(\cdot)$, ranging from traditional machine learning methods such as support vector regression and gradient boosting trees to deep learning architectures such as MLP, LSTM, GRU, and TCN. The second part discusses model training strategies, including dataset construction, input feature selection, training objectives, and evaluation protocols.
+$f(\cdot)$, ranging from traditional machine learning methods such as support vector regression and gradient boosting trees to deep learning architectures such as MLP, LSTM, GRU, and TCN. The second part discusses model training strategies, including federated learning, end-to-end learning, and explainable AI.
 
 ### Model Structures
 
