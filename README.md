@@ -180,7 +180,6 @@ A summary of representative black-box model structures is shown below.
 Overall, the selection of a black-box model structure depends on the available data volume, sampling resolution, prediction horizon, computational resources, and application scenario. For short-term temperature prediction with limited data, SVR or gradient boosting models may be sufficient. For large-scale time-series datasets and applications requiring multi-step prediction, LSTM, GRU, and TCN models are often more suitable.
 
 ### Model Training
-### Model Training
 
 After selecting the model structure, the next step is to determine how the black-box thermal dynamic model is trained. In building thermal modeling, the training strategy is not only related to prediction accuracy, but also affects data availability, model generalization, privacy protection, deployment scalability, and interpretability.
 
@@ -194,7 +193,7 @@ $$
 \mathcal{D} = \{(X_i, Y_i)\}_{i=1}^{N}
 $$
 
-where $X_i$ denotes the input features or input sequences and $Y_i$ denotes the corresponding target output, the training objective is to learn a function $f(\cdot)$ that maps input variables to future thermal states:
+where $X_i$ denotes the input features or input sequences, and $Y_i$ denotes the corresponding target output, the training objective is to learn a function $f(\cdot)$ that maps input variables to future thermal states:
 
 $$
 \hat{Y}_i = f(X_i; \theta)
@@ -356,7 +355,7 @@ Nevertheless, end-to-end learning also has limitations. It usually requires a la
 
 #### Explainable AI
 
-Explainable AI, XAI, aims to improve the transparency and interpretability of black-box models. This is important for building thermal dynamics because model predictions are often used to support energy management, demand response, fault detection, and HVAC control decisions. In these applications, users may need to understand why the model makes a certain prediction, which variables dominate the thermal response, and whether the learned behavior is physically reasonable.
+Explainable AI (XAI) aims to improve the transparency and interpretability of black-box models. This is important for building thermal dynamics because model predictions are often used to support energy management, demand response, fault detection, and HVAC control decisions. In these applications, users may need to understand why the model makes a certain prediction, which variables dominate the thermal response, and whether the learned behavior is physically reasonable.
 
 Although black-box models can achieve high prediction accuracy, they may learn spurious correlations from historical data. For example, a model may incorrectly associate a specific time of day with temperature increase without correctly capturing the underlying effects of solar radiation, occupancy, or HVAC operation. Explainable AI methods help diagnose such issues by analyzing feature contributions, temporal dependencies, and model sensitivity.
 
@@ -364,7 +363,7 @@ Common XAI methods for black-box thermal models include feature importance, part
 
 Feature importance methods estimate how much each input variable contributes to the prediction. For tree-based models, feature importance can often be directly obtained from the trained ensemble. For neural networks, permutation importance can be used by randomly shuffling one feature and observing the increase in prediction error. If shuffling outdoor temperature or HVAC power causes a large increase in error, this indicates that the model relies strongly on that variable.
 
-SHAP, Shapley Additive Explanations, is another widely used method. It explains a prediction by assigning each input feature a contribution value based on cooperative game theory. For a prediction model $f(\cdot)$, SHAP approximates the output as:
+SHAP (SHapley Additive Explanations) is another widely used method. It explains a prediction by assigning each input feature a contribution value based on cooperative game theory. For a prediction model $f(\cdot)$, SHAP approximates the output as:
 
 $$
 f(x) = \phi_0 + \sum_{j=1}^{p}\phi_j
@@ -372,7 +371,7 @@ $$
 
 where $\phi_0$ is the baseline prediction and $\phi_j$ is the contribution of feature $j$. In building thermal modeling, SHAP values can be used to quantify how outdoor temperature, solar irradiance, occupancy, HVAC power, and historical indoor temperature contribute to the predicted temperature.
 
-LIME, Local Interpretable Model-agnostic Explanations, explains individual predictions by fitting a simple interpretable model around the local neighborhood of a specific input sample. This can help identify why the model predicts a high cooling load or a rapid temperature increase at a particular time.
+LIME (Local Interpretable Model-agnostic Explanations) explains individual predictions by fitting a simple interpretable model around the local neighborhood of a specific input sample. This can help identify why the model predicts a high cooling load or a rapid temperature increase at a particular time.
 
 For sequence models such as LSTM, GRU, TCN, or Transformer-based models, explainability can also be performed along the temporal dimension. Temporal attribution methods estimate which past time steps have the greatest influence on the current prediction. For example, if the model predicts the indoor temperature at 5:00 p.m., temporal attribution can show whether the prediction is mainly influenced by recent HVAC operation, outdoor temperature several hours earlier, or accumulated solar gains during the afternoon.
 
