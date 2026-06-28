@@ -6,7 +6,6 @@ Building modeling approaches are broadly categorized into three paradigms, each 
 |---|---|
 | **[⚪ White-box Models](#white-box-models)** | Physics-based models that explicitly encode building dynamics using first-principles equations, such as thermodynamics, heat transfer, and HVAC system behavior. They are highly interpretable and generalizable, but usually require detailed building specifications and careful calibration. |
 | **[⚫ Black-box Models](#black-box-models)** | Data-driven models that learn building behavior directly from operational data without explicitly modeling the underlying physical processes. They can achieve strong predictive performance, especially with large-scale sensor data, but often lack interpretability and physical consistency. |
-| **[🔘 Gray-box Models](#gray-box-models)** | Hybrid models that combine simplified physical structures with data-driven parameter estimation. They aim to balance interpretability and flexibility, making them useful when partial physical knowledge and measured data are both available. |
 
 # White-box Models
 White-box models describe building behavior based on known physical principles. They explicitly model how heat, air, energy, and control signals flow through a building and its HVAC systems, using equations derived from thermodynamics, heat transfer, fluid dynamics, and system control. Unlike purely data-driven models, white-box models do not treat the building as an unknown mapping from inputs to outputs; instead, they attempt to reproduce the actual physical processes that determine indoor conditions and energy consumption.
@@ -158,6 +157,43 @@ where $X_k$ denotes a historical input sequence.
 TCNs often use dilated convolutions to enlarge the receptive field, allowing the model to capture long-term dependencies without very deep networks. This is useful for building thermal dynamics because the indoor temperature response may depend on HVAC operation and weather conditions over a relatively long historical period.
 
 Compared with LSTM and GRU, TCNs are easier to parallelize during training and can be more stable for long sequences. They are suitable for both one-step-ahead and multi-step-ahead temperature prediction. However, the choice of receptive field, dilation factor, kernel size, and sequence length can significantly influence model performance.
+
+### Resistor-Capacitor Models
+
+Resistor-Capacitor (RC) models abstract the building thermal dynamics into a network of lumped thermal resistances and capacitances. Instead of solving spatially distributed heat transfer equations, RC models represent the building as a small number of thermal nodes connected by thermal resistors and capacitors, capturing the dominant thermal behavior with minimal parameters.
+
+The simplest first-order RC model represents the building as a single thermal node:
+
+$$C\frac{dT_i}{dt} = \frac{T_o - T_i}{R} + Q_{HVAC} + Q_{internal}$$
+
+where $C$ is the thermal capacitance, $R$ is the thermal resistance, $T_i$ is the indoor temperature, $T_o$ is the outdoor temperature, $Q_{HVAC}$ is the HVAC heat input, and $Q_{internal}$ represents internal heat gains.
+
+Higher-order RC models (e.g., 2R1C, 3R2C) introduce additional nodes to distinguish fast-responding components (indoor air) from slow-responding components (wall thermal mass). The general $n$-node form is:
+
+$$C_i\frac{dT_i}{dt} = \sum_{j} \frac{T_j - T_i}{R_{ij}} + Q_i$$
+
+RC models can be discretized into state-space form, making them directly suitable for model predictive control, Kalman filtering, and online parameter identification. They require far fewer parameters than detailed white-box models and are computationally efficient for real-time applications.
+
+However, the lumped-parameter assumption limits spatial resolution, and the linear heat transfer assumption may not capture nonlinear effects such as variable convection or solar radiation absorption. The choice of model order also involves a trade-off between accuracy and simplicity.
+
+### Physics-Informed Neural Networks
+
+Physics-Informed Neural Networks (PINNs) embed physical governing equations into the neural network training process as additional loss terms. Instead of learning the thermal dynamics purely from data, PINNs constrain the learned function to satisfy known physical laws, combining data-driven flexibility with physics-based regularization.
+
+A PINN for building thermal dynamics is trained by minimizing a composite loss:
+
+$$\mathcal{L}(\theta) = \mathcal{L}_{\text{data}}(\theta) + \lambda \mathcal{L}_{\text{physics}}(\theta)$$
+
+where $\mathcal{L}_{\text{data}}$ penalizes prediction errors against measured data, and $\mathcal{L}_{\text{physics}}$ penalizes violations of the governing thermal equation:
+
+$$\mathcal{L}_{\text{physics}}(\theta) = \frac{1}{N_r}\sum_{k=1}^{N_r} \left|\frac{d\hat{T}}{dt} - \frac{1}{C}\left(\frac{T_o - \hat{T}}{R} + Q_{HVAC} + Q_{internal}\right)\right|^2$$
+
+where the derivatives are computed via automatic differentiation and $\lambda$ controls the balance between data fitting and physical consistency.
+
+PINNs can generalize better to unseen operating conditions than pure black-box models because the physics constraints prevent physically implausible predictions. They also require less training data, since the governing equations provide additional information. The learned parameters may retain physical meaning, offering partial interpretability.
+
+However, PINNs are more computationally expensive to train due to derivative computation, and the regularization weight $\lambda$ requires careful tuning. They also require the user to specify the governing equations explicitly, which limits their applicability when the underlying physics is uncertain or highly complex.
+
 
 ### Comparison of Representative Structures
 
@@ -381,5 +417,3 @@ A summary of these strategies is shown below.
 
 Overall, model training for black-box building thermal dynamics should be designed according to the target application. For single-building prediction with sufficient historical data, centralized supervised learning is usually adequate. For large-scale deployment across multiple buildings with privacy constraints, federated learning provides an attractive solution. For prediction or control tasks with rich sensor data, end-to-end learning can capture complex nonlinear and temporal relationships. Finally, explainable AI should be incorporated to improve model transparency, validate physical plausibility, and increase trust in practical building energy applications.
 
-# Gray-box Models
-Representative approaches include Physics-Informed Neural Networks (PINNs), which embed governing differential equations as soft constraints during neural network training, and Resistance-Capacitance (RC) thermal network models, which abstract building thermal dynamics into compact equivalent circuits whose parameters are identified from data. These hybrid methods offer improved sample efficiency and interpretability compared to pure black-box approaches, while relaxing the detailed input requirements of white-box simulators.
