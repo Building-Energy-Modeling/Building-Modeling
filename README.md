@@ -44,38 +44,6 @@ $f(\cdot)$, ranging from traditional machine learning methods such as support ve
 
 Black-box thermal dynamic models differ mainly in the choice of function approximator used to learn the nonlinear mapping $f(\cdot)$. In building thermal modeling, the input to the model is usually constructed from historical indoor temperatures, control inputs, weather variables, occupancy-related variables, and other measurable disturbances. Depending on how temporal dependencies are represented, black-box model structures can be broadly divided into traditional machine learning models and deep learning models.
 
-### Support Vector Regression
-
-Support Vector Regression (SVR) is one of the commonly used traditional machine learning methods for building thermal dynamics prediction. SVR approximates the nonlinear relationship between input features and thermal responses by mapping the original input space into a high-dimensional feature space through kernel functions. A typical SVR-based thermal model can be written as:
-
-$$
-T_{k+1} = f_{\text{SVR}}(x_k)
-$$
-
-where $x_k$ is the feature vector constructed from historical temperatures, HVAC control signals, weather disturbances, and occupancy-related variables, for example:
-
-$$
-x_k = [T_k, T_{k-1}, u_k, u_{k-1}, \omega_k, \omega_{k-1}]
-$$
-
-The kernel function allows SVR to capture nonlinear thermal behavior without explicitly defining the physical heat transfer process. Common kernel choices include radial basis function, RBF, kernels and polynomial kernels.
-
-SVR is suitable for small- to medium-scale datasets and often provides robust prediction performance when the amount of training data is limited. However, its performance depends strongly on feature engineering, kernel selection, and hyperparameter tuning. In addition, SVR does not naturally model long-term temporal dependencies unless lagged variables are manually included in the input feature vector.
-
-### Tree-based Ensemble Models
-
-Tree-based ensemble models, such as Random Forest, Gradient Boosting Decision Trees, XGBoost, LightGBM, and CatBoost, are widely used for black-box building thermal modeling due to their strong nonlinear fitting ability and relatively low requirement for data preprocessing. These models approximate the thermal dynamics function as an ensemble of decision trees:
-
-$$
-T_{k+1} = f_{\text{tree}}(x_k)
-$$
-
-where $x_k$ contains current and historical measurements of temperature, control inputs, weather conditions, internal gains, and calendar variables.
-
-Gradient boosting models are particularly effective because they sequentially train multiple weak learners to reduce prediction errors. In thermal dynamic modeling, they can capture nonlinear effects such as the influence of outdoor temperature, solar radiation, HVAC operation, and occupancy on indoor temperature evolution.
-
-Compared with neural networks, tree-based models are easier to train and can provide feature importance indicators, which offer a limited degree of interpretability. They are also effective for tabular building operation datasets. However, similar to SVR, temporal dynamics must usually be introduced manually through lagged features, rolling statistics, or window-based input construction. Their extrapolation capability is also limited when the operating condition differs significantly from the training data distribution.
-
 ### Multi-layer Perceptron
 
 Multi-layer Perceptron (MLP) is a basic feedforward neural network structure that can approximate complex nonlinear mappings between input features and thermal responses. An MLP-based thermal dynamic model can be expressed as:
