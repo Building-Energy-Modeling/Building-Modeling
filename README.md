@@ -96,7 +96,7 @@ $$
 
 where $h_k$ is the hidden state, $x_k$ is the input vector at time step $k$, and $\phi(\cdot)$ and $g(\cdot)$ are nonlinear functions learned from data.
 
-Recurrent neural network structures have also been adapted specifically for building heat dynamics. Bünning et al. [\[RNN-1\]](https://doi.org/10.1016/j.enbuild.2020.110318) proposed physics-informed linear recurrent neural networks for building heat dynamics, combining recurrent sequence modeling with physical prior knowledge. Their work shows that recurrent architectures can be used not only as pure black-box predictors, but also as compact and physically informed models for capturing building thermal evolution.
+Recurrent neural network structures have also been adapted specifically for building heat dynamics. Bünning et al. [\[RNN-1\]](https://doi.org/10.1016/j.enbuild.2020.110318) proposed physics-informed linear recurrent neural networks for building heat dynamics, combining recurrent sequence modeling with physical prior knowledge. Their work shows that recurrent architectures can be used not only as pure black-box predictors but also as compact and physically informed models for capturing building thermal evolution.
 
 Basic RNNs can model temporal dependencies, but they often suffer from vanishing or exploding gradient problems when learning long-term dependencies. Since building thermal dynamics may involve delayed responses over several hours, more advanced recurrent architectures such as LSTM and GRU are commonly preferred.
 
@@ -146,7 +146,7 @@ $$
 
 where $X_k$ denotes a historical input sequence.
 
-TCNs often use dilated convolutions to enlarge the receptive field, allowing the model to capture long-term dependencies without very deep networks. This is useful for building thermal dynamics because the indoor temperature response may depend on HVAC operation and weather conditions over a relatively long historical period.
+TCNs often use dilated convolutions to enlarge the receptive field, allowing the model to capture long-term dependencies without very deep networks. Bai et al. [\[TCN-1\]](https://arxiv.org/abs/1803.01271) systematically evaluated temporal convolutional networks against recurrent architectures and showed that TCNs can be a strong and stable alternative for sequence modeling tasks.
 
 Compared with LSTM and GRU, TCNs are easier to parallelize during training and can be more stable for long sequences. They are suitable for both one-step-ahead and multi-step-ahead temperature prediction. However, the choice of receptive field, dilation factor, kernel size, and sequence length can significantly influence model performance.
 
