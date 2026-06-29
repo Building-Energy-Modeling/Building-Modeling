@@ -396,6 +396,10 @@ A summary of these strategies is shown below.
 Overall, model training for black-box building thermal dynamics should be designed according to the target application. For single-building prediction with sufficient historical data, centralized supervised learning is usually adequate. For large-scale deployment across multiple buildings with privacy constraints, federated learning provides an attractive solution. For prediction or control tasks with rich sensor data, end-to-end learning can capture complex nonlinear and temporal relationships. Finally, explainable AI should be incorporated to improve model transparency, validate physical plausibility, and increase trust in practical building energy applications.
 
 ## Reference
+[\[RC-1\]](https://doi.org/10.1016/j.enbuild.2011.02.005) Bacher, P., & Madsen, H. (2011). Identifying suitable models for the heat dynamics of buildings. *Energy and Buildings*, 43(7), 1511–1522.
+
+[\[RC-2\]](https://doi.org/10.1016/j.enbuild.2014.07.025) Reynders, G., Diriken, J., & Saelens, D. (2014). Quality of grey-box models and identified parameters as function of the accuracy of input and observation signals. *Energy and Buildings*, 82, 263–274.
+
 [\[MLP-1\]](https://doi.org/10.1016/j.enbuild.2011.02.007) Mustafaraj, G., Lowry, G., & Chen, J. (2011). Prediction of room temperature and relative humidity by autoregressive linear and nonlinear neural network models for an open office. *Energy and Buildings*, 43(6), 1452–1460. 
 
 [\[MLP-2\]](https://doi.org/10.1016/j.enbuild.2012.08.002) Ferreira, P. M., Ruano, A. E., Silva, S., & Conceição, E. Z. E. (2012). Neural networks based predictive control for thermal comfort and energy savings in public buildings. *Energy and Buildings*, 55, 238–251. 
@@ -404,6 +408,4 @@ Overall, model training for black-box building thermal dynamics should be design
 
 [\[PINN-1\]](https://doi.org/10.1016/j.enbuild.2021.110992) Drgoňa, J., Tuor, A. R., Chandan, V., & Vrabie, D. L. (2021). Physics-constrained deep learning of multi-zone building thermal dynamics. *Energy and Buildings*, 243, 110992.
 
-[\[RC-1\]](https://doi.org/10.1016/j.enbuild.2011.02.005) Bacher, P., & Madsen, H. (2011). Identifying suitable models for the heat dynamics of buildings. *Energy and Buildings*, 43(7), 1511–1522.
 
-[\[RC-2\]](https://doi.org/10.1016/j.enbuild.2014.07.025) Reynders, G., Diriken, J., & Saelens, D. (2014). Quality of grey-box models and identified parameters as function of the accuracy of input and observation signals. *Energy and Buildings*, 82, 263–274.
