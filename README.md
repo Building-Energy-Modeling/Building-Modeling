@@ -406,6 +406,8 @@ Overall, model training for black-box building thermal dynamics should be design
 
 [\[RNN-1\]](https://doi.org/10.1016/j.enbuild.2020.110318) Bünning, F., Huber, B., Heer, P., Aboudonia, A., & Lygeros, J. (2020). Physics-informed linear recurrent neural networks for building heat dynamics. *Energy and Buildings*, 226, 110318.
 
+[\[TCN-1\]](https://arxiv.org/abs/1803.01271) Bai, S., Kolter, J. Z., & Koltun, V. (2018). An empirical evaluation of generic convolutional and recurrent networks for sequence modeling. *arXiv preprint arXiv:1803.01271*.
+
 [\[PINN-1\]](https://doi.org/10.1016/j.enbuild.2021.110992) Drgoňa, J., Tuor, A. R., Chandan, V., & Vrabie, D. L. (2021). Physics-constrained deep learning of multi-zone building thermal dynamics. *Energy and Buildings*, 243, 110992.
 
 
