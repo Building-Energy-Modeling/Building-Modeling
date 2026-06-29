@@ -196,79 +196,17 @@ Overall, the selection of a black-box model structure depends on the available d
 
 After selecting the model structure, the next step is to determine how the black-box thermal dynamic model is trained. In building thermal modeling, the training strategy is not only related to prediction accuracy but also affects data availability, model generalization, privacy protection, deployment scalability, and interpretability.
 
-Traditional black-box models are usually trained in a centralized supervised learning manner, where operational data from one or multiple buildings are collected and stored in a central database. The model is then optimized to minimize the discrepancy between predicted and measured thermal responses. However, with the increasing deployment of smart meters, building automation systems, and IoT sensors, new training strategies have become important for large-scale building thermal modeling. This section discusses three representative strategies: federated learning, end-to-end learning, and explainable AI.
+Most black-box thermal dynamic models in buildings are trained in a supervised learning manner, where historical operational measurements are organized into input-output pairs and the model parameters are optimized by minimizing prediction errors. This formulation is widely adopted in data-driven HVAC and indoor environment modeling, where the objective is to learn the mapping from past thermal states, control inputs, and disturbances to future thermal responses [[SL-1]](https://doi.org/10.1016/j.enbuild.2015.03.045) [[SL-2]](https://www.sciencedirect.com/science/article/pii/S0378778811004108).
 
-### Supervised Learning Formulation
+For indoor temperature prediction, supervised learning models are often constructed using autoregressive inputs, exogenous variables, or historical time windows. Such formulations have been widely used in neural-network-based room temperature prediction and black-box HVAC modeling [[SL-1]](https://doi.org/10.1016/j.enbuild.2015.03.045) [[SL-2]](https://www.sciencedirect.com/science/article/pii/S0378778811004108).
 
-Most black-box thermal dynamic models are trained using supervised learning. Given a dataset of historical measurements,
-
-$$
-\mathcal{D} = \{(X_i, Y_i)\}_{i=1}^{N}
-$$
-
-where $X_i$ denotes the input features or input sequences, and $Y_i$ denotes the corresponding target output, the training objective is to learn a function $f(\cdot)$ that maps input variables to future thermal states:
-
-$$
-\hat{Y}_i = f(X_i; \theta)
-$$
-
-where $\theta$ represents the trainable model parameters.
-
-For one-step-ahead indoor temperature prediction, the target can be defined as:
-
-$$
-Y_i = T_{k+1}
-$$
-
-and the input can be constructed as:
-
-$$
-X_i = [T_k, T_{k-1}, \dots, u_k, u_{k-1}, \dots, \omega_k, \omega_{k-1}, \dots]
-$$
-
-For sequence-based models such as LSTM, GRU, and TCN, the input is usually a historical time window:
-
-$$
-X_i = [x_{k-n+1}, x_{k-n+2}, \dots, x_k]
-$$
-
-and the output can be either a one-step prediction,
-
-$$
-Y_i = T_{k+1}
-$$
-
-or a multi-step prediction,
-
-$$
-Y_i = [T_{k+1}, T_{k+2}, \dots, T_{k+H}]
-$$
-
-where $H$ is the prediction horizon.
-
-A common loss function for model training is the mean squared error, MSE:
-
-$$
-\mathcal{L}(\theta) = \frac{1}{N} \sum_{i=1}^{N} \left\|Y_i - f(X_i; \theta)\right\|_2^2
-$$
-
-Other evaluation metrics, such as mean absolute error, MAE, root mean squared error, RMSE, and coefficient of determination, $R^2$, are also commonly used:
-
-$$
-\text{MAE} = \frac{1}{N}\sum_{i=1}^{N}|Y_i - \hat{Y}_i|
-$$
-
-$$
-\text{RMSE} = \sqrt{\frac{1}{N}\sum_{i=1}^{N}(Y_i - \hat{Y}_i)^2}
-$$
-
-The model is usually trained on a training set, tuned on a validation set, and finally evaluated on a test set. For time-series thermal modeling, the data split should follow chronological order to avoid information leakage from future data.
+However, with the increasing deployment of smart meters, building automation systems, and IoT sensors, new training strategies have become important for large-scale building thermal modeling. This section discusses three representative strategies: federated learning, end-to-end learning, and explainable AI.
 
 ### Federated Learning
 
-Federated learning is a distributed training strategy that allows multiple buildings or devices to collaboratively train a shared model without directly sharing their raw operational data. This is particularly useful for building thermal modeling because building operation data may contain sensitive information, such as occupancy patterns, energy usage behavior, and control schedules.
+Federated learning is a distributed training paradigm that enables multiple buildings or local devices to collaboratively train a shared model without directly exchanging raw operational data. This strategy is particularly relevant for building thermal and energy modeling because sensor data may reveal sensitive information such as occupancy patterns, control schedules, and energy-use behavior. Recent studies have explored federated learning for building-side and smart-meter load forecasting, showing that privacy-preserving collaborative training can achieve competitive predictive performance while avoiding centralized data collection [\[Fed-1]\](https://doi.org/10.1016/j.ijepes.2021.107669) [\[Fed-2]\](https://ieeexplore.ieee.org/document/9149392).
 
-In a conventional centralized learning framework, data from different buildings are collected into a central server:
+In a conventional centralized learning framework, data from different buildings is collected into a central server:
 
 $$
 \mathcal{D} = \mathcal{D}_1 \cup \mathcal{D}_2 \cup \dots \cup \mathcal{D}_M
@@ -293,9 +231,9 @@ $$
 
 where $\theta_m^{(r+1)}$ denotes the locally updated model parameters from building $m$, $N_m$ is the number of local samples, and $N = \sum_{m=1}^{M}N_m$ is the total number of samples across all participating buildings.
 
-For building thermal dynamics, federated learning has several advantages. First, it improves data privacy because raw sensor data do not need to leave the building. Second, it enables collaborative model training across a large number of buildings, which can improve generalization compared with training on a single building. Third, it is suitable for large-scale deployment scenarios, such as campus buildings, commercial building portfolios, and smart city energy systems.
+For building thermal dynamics, federated learning has several advantages. First, it improves data privacy because raw sensor data do not need to leave the building. Second, it enables collaborative model training across a large number of buildings, which can improve generalization compared with training on a single building. Third, it is suitable for large-scale deployment scenarios, such as campus buildings, commercial building portfolios, and geographically distributed smart building systems [[Fed-1]](https://doi.org/10.1016/j.ijepes.2021.107669).
 
-However, federated learning also introduces several challenges. Building datasets are often non-independent and identically distributed, non-IID, because different buildings have different thermal properties, HVAC systems, occupancy schedules, and climate conditions. As a result, local model updates may be inconsistent, and the global model may not perform equally well for all buildings. Communication cost is another important issue, especially when deep learning models with many parameters are used. In addition, missing data, sensor faults, different sampling rates, and heterogeneous feature availability can further complicate federated training.
+However, federated learning also introduces several challenges. Building datasets are often non-independent and identically distributed (non-IID), because different buildings have different thermal properties, HVAC systems, occupancy schedules, and climate conditions. As a result, local model updates may be inconsistent, and the global model may not perform equally well for all buildings. Communication cost is another important issue, especially when deep learning models with many parameters are used. In addition, missing data, sensor faults, different sampling rates, and heterogeneous feature availability can further complicate federated training.
 
 To address these issues, personalized federated learning can be used. Instead of deploying the same global model to all buildings, each building adapts the global model to its own local conditions through fine-tuning:
 
@@ -305,9 +243,11 @@ $$
 
 This strategy combines the benefit of cross-building knowledge sharing with the flexibility of building-specific adaptation.
 
+To conclude, although federated learning has so far been more widely investigated for load and energy forecasting than for detailed indoor thermal dynamics, its underlying principle is directly applicable to privacy-preserving multi-building thermal model training.
+
 ### End-to-End Learning
 
-End-to-end learning refers to a training strategy in which the model directly learns the mapping from raw or minimally processed inputs to the final prediction or control-oriented output. In the context of building thermal dynamics, an end-to-end model can be trained to predict future indoor temperature, zone load, HVAC energy consumption, or even optimal control actions directly from historical measurements.
+End-to-end learning refers to training strategies in which the model directly learns the mapping from raw or minimally processed observations to the final prediction or control-oriented output. In building applications, this paradigm has been increasingly adopted for both predictive tasks and decision-making tasks. For example, deep reinforcement learning enables a control policy to directly map observed building states to HVAC control actions, thereby bypassing manually designed control rules [[E2E-1]](https://doi.org/10.1016/j.apenergy.2018.11.002) [[E2E-2]](https://dl.acm.org/doi/10.1145/3061639.3062224).
 
 A standard black-box prediction model can be written as:
 
@@ -320,7 +260,9 @@ where $X_k$ contains historical indoor temperature, control inputs, weather dist
 In an end-to-end sequence prediction setting, the model may directly map a historical input sequence to a future temperature trajectory:
 
 $$
-[\hat{T}_{k+1}, \hat{T}_{k+2}, \dots, \hat{T}_{k+H}]=f_{\text{E2E}}([x_{k-n+1}, x_{k-n+2}, \dots, x_k]; \theta)
+[\hat{T}_{k+1}, \hat{T}_{k+2}, \dots, \hat{T}_{k+H}]
+=
+f_{\text{E2E}}([x_{k-n+1}, x_{k-n+2}, \dots, x_k]; \theta)
 $$
 
 where $n$ is the input window length and $H$ is the prediction horizon.
@@ -338,13 +280,21 @@ where $s_k$ is the observed state, including indoor temperature, weather forecas
 For purely predictive tasks, the end-to-end training objective is usually based on prediction error:
 
 $$
-\mathcal{L}_{\text{pred}}(\theta)=\frac{1}{N}\sum_{i=1}^{N}\left\|Y_i - f_{\text{E2E}}(X_i; \theta)\right\|_2^2
+\mathcal{L}_{\text{pred}}(\theta)
+=
+\frac{1}{N}\sum_{i=1}^{N}\left\|Y_i - f_{\text{E2E}}(X_i; \theta)\right\|_2^2
 $$
 
-For control-oriented learning, the objective may include multiple terms, such as thermal comfort violation, energy consumption, and control smoothness:
+For control-oriented learning, the objective may include multiple terms, such as thermal comfort violation, energy consumption, and control smoothness. Moreover, end-to-end learning can also be combined with differentiable optimization layers, where the prediction model and the downstream optimization problem are jointly embedded into a single trainable pipeline. This is particularly relevant to toolchains such as `cvxpylayers`, which enable gradients to propagate through convex optimization problems [[E2E-3]](https://proceedings.neurips.cc/paper/2019/hash/9ce3c52fc54362e22053399d3181c638-Abstract.html).
 
 $$
-\mathcal{L}_{\text{control}}=\lambda_1 \mathcal{L}_{\text{comfort}} + \lambda_2 \mathcal{L}_{\text{energy}}+\lambda_3 \mathcal{L}_{\text{smoothness}}
+\mathcal{L}_{\text{control}}
+=
+\lambda_1 \mathcal{L}_{\text{comfort}}
++
+\lambda_2 \mathcal{L}_{\text{energy}}
++
+\lambda_3 \mathcal{L}_{\text{smoothness}}
 $$
 
 where $\lambda_1$, $\lambda_2$, and $\lambda_3$ are weighting coefficients.
@@ -410,4 +360,20 @@ Overall, model training for black-box building thermal dynamics should be design
 
 [\[PINN-1\]](https://doi.org/10.1016/j.enbuild.2021.110992) Drgoňa, J., Tuor, A. R., Chandan, V., & Vrabie, D. L. (2021). Physics-constrained deep learning of multi-zone building thermal dynamics. *Energy and Buildings*, 243, 110992.
 
+[[SL-1]](https://doi.org/10.1016/j.enbuild.2015.03.045) Afram, A., & Janabi-Sharifi, F. (2015). Black-box modeling of residential HVAC system and comparison of gray-box and black-box modeling methods. *Energy and Buildings*, 94, 121-149.
 
+[[SL-2]](https://www.sciencedirect.com/science/article/pii/S0378778811004108) Mustafaraj, G., Lowry, G., & Chen, J. (2011). Prediction of room temperature and relative humidity by autoregressive linear and nonlinear neural network models for an open office. *Energy and Buildings*, 43(6), 1452-1460.
+
+[[Fed-1]](https://doi.org/10.1016/j.ijepes.2021.107669) Fekri, M. N., Grolinger, K., & Mir, S. (2022). Distributed load forecasting using smart meter data: Federated learning with recurrent neural networks. *International Journal of Electrical Power & Energy Systems*, 137, 107669.
+
+[[Fed-2]](https://ieeexplore.ieee.org/document/9149392) Taïk, A., & Cherkaoui, S. (2020). Electrical load forecasting using edge computing and federated learning. *IEEE International Conference on Communications (ICC)*, 1-6.
+
+[[E2E-1]](https://doi.org/10.1016/j.apenergy.2018.11.002) Vázquez-Canteli, J. R., & Nagy, Z. (2019). Reinforcement learning for demand response: A review of algorithms and modeling techniques. *Applied Energy*, 235, 1072-1089.
+
+[[E2E-2]](https://dl.acm.org/doi/10.1145/3061639.3062224) Wei, T., Wang, Y., & Zhu, Q. (2017). Deep reinforcement learning for building HVAC control. *Proceedings of the 54th Annual Design Automation Conference (DAC)*, Article 22.
+
+[[E2E-3]](https://proceedings.neurips.cc/paper/2019/hash/9ce3c52fc54362e22053399d3181c638-Abstract.html) Agrawal, A., Amos, B., Barratt, S., Boyd, S., Diamond, S., & Kolter, J. Z. (2019). Differentiable convex optimization layers. *Advances in Neural Information Processing Systems*, 32.
+
+[[XAI-1]](https://proceedings.neurips.cc/paper/2017/hash/8a20a8621978632d76c43dfd28b67767-Abstract.html) Lundberg, S. M., & Lee, S.-I. (2017). A unified approach to interpreting model predictions. *Advances in Neural Information Processing Systems*, 30.
+
+[[XAI-2]](https://dl.acm.org/doi/10.1145/2939672.2939778) Ribeiro, M. T., Singh, S., & Guestrin, C. (2016). “Why should I trust you?”: Explaining the predictions of any classifier. *Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining*, 1135-1144.
