@@ -300,6 +300,13 @@ End-to-end learning offers several advantages. It can exploit large-scale sensor
 
 Nevertheless, end-to-end learning also has limitations. It usually requires a large amount of high-quality data and may be sensitive to changes in data distribution. If the training data do not cover enough operating conditions, the model may perform poorly under unseen weather conditions, abnormal occupancy patterns, or new HVAC control strategies. Moreover, end-to-end models are often difficult to interpret, which may reduce user trust and make fault diagnosis more challenging.
 
+Useful packages related to end-to-end learning, along with their links and introductions, are listed below:
+| Package | Link | Typical use |
+|---|---|---|
+| `Keras` | [https://keras.io/](https://keras.io/) | Rapid deep-learning prototyping |
+| `CVXPY` | [https://www.cvxpy.org/](https://www.cvxpy.org/) | Convex optimization modeling |
+| `cvxpylayers` | [https://github.com/cvxgrp/cvxpylayers](https://github.com/cvxgrp/cvxpylayers) | Differentiable convex optimization layers |
+
 ### Explainable AI
 
 Explainable AI (XAI) aims to improve the transparency and interpretability of black-box models. This is particularly important for building thermal dynamics because model predictions are often used to support energy management, demand response, fault detection, and HVAC control decisions. In such applications, accurate predictions alone are often insufficient; users also need to understand which variables dominate the prediction, whether the learned relationships are physically meaningful, and how the model behaves under changing operating conditions [\[XAI-1\]](https://proceedings.neurips.cc/paper/2017/hash/8a20a8621978632d76c43dfd28b67767-Abstract.html) [\[XAI-2\]](https://dl.acm.org/doi/10.1145/2939672.2939778).
@@ -325,6 +332,18 @@ For sequence models such as LSTM, GRU, TCN, or Transformer-based models, explain
 Sensitivity analysis is another useful approach for evaluating whether the learned model is physically plausible. For example, one can increase the heating input while keeping other variables fixed and observe whether the predicted indoor temperature increases. Similarly, one can increase outdoor temperature or solar radiation to check whether the model response follows expected thermal behavior. Although black-box models do not explicitly enforce physical laws, such post-hoc analysis can help detect unrealistic or non-physical learned relationships.
 
 Explainable AI can also support model debugging and feature selection. If the explanation results show that the model relies heavily on irrelevant variables or ignores important physical variables, the input feature set or training dataset may need to be revised. In this sense, XAI is not only a visualization tool but also a practical component of the model development workflow for model debugging, feature selection, and checking whether the learned thermal behavior is physically plausible [\[XAI-1\]](https://proceedings.neurips.cc/paper/2017/hash/8a20a8621978632d76c43dfd28b67767-Abstract.html) [\[XAI-2\]](https://dl.acm.org/doi/10.1145/2939672.2939778).
+
+Useful packages related to xAI, along with their links and introductions, are listed below:
+| Package | Link | Typical use |
+|---|---|---|
+| `SHAP` | [https://shap.readthedocs.io/](https://shap.readthedocs.io/) | Shapley-value-based feature attribution |
+| `LIME` | [https://lime-ml.readthedocs.io/](https://lime-ml.readthedocs.io/) | Local surrogate explanations |
+| `Captum` | [https://captum.ai/](https://captum.ai/) | Deep model interpretability for PyTorch |
+| `InterpretML` | [https://interpret.ml/](https://interpret.ml/) | Interpretable models and post-hoc explanations |
+| `Alibi` | [https://docs.seldon.io/projects/alibi/en/stable/](https://docs.seldon.io/projects/alibi/en/stable/) | Counterfactual and model-agnostic explanations |
+| `DALEX` | [https://dalex.drwhy.ai/python](https://dalex.drwhy.ai/python) | Model diagnostics and explainability |
+| `eli5` | [https://eli5.readthedocs.io/](https://eli5.readthedocs.io/) | Feature importance and permutation-based explanations |
+
 
 ### Summary of Training Strategies
 
