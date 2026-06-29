@@ -1,4 +1,4 @@
-# Introduction
+<img width="733" height="1484" alt="image" src="https://github.com/user-attachments/assets/dc2ccc27-a6a9-4ff9-bce6-952e1a545487" /># Introduction
 Accurate modeling of building energy systems is a cornerstone of modern smart building research, enabling applications ranging from energy consumption prediction, demand response, and optimal control. As buildings account for more than 30% of global energy consumption, developing reliable and efficient building models has become increasingly critical for achieving sustainability goals.
 
 Building modeling approaches are broadly categorized into three paradigms, each reflecting a different balance between physical interpretability and data-driven flexibility:
@@ -235,13 +235,13 @@ For building thermal dynamics, federated learning has several advantages. First,
 
 However, federated learning also introduces several challenges. Building datasets are often non-independent and identically distributed (non-IID), because different buildings have different thermal properties, HVAC systems, occupancy schedules, and climate conditions. As a result, local model updates may be inconsistent, and the global model may not perform equally well for all buildings. Communication cost is another important issue, especially when deep learning models with many parameters are used. In addition, missing data, sensor faults, different sampling rates, and heterogeneous feature availability can further complicate federated training.
 
-To address these issues, personalized federated learning can be used. Instead of deploying the same global model to all buildings, each building adapts the global model to its own local conditions through fine-tuning:
+To address these issues, personalized federated learning can be used, where each building inherits shared knowledge from the global model while retaining the flexibility to adapt the model to its own thermal behavior and operational patterns.
 
 $$
 \theta_m^{*} = \text{FineTune}(\theta_{\text{global}}, \mathcal{D}_m)
 $$
 
-This strategy combines the benefit of cross-building knowledge sharing with the flexibility of building-specific adaptation.
+This strategy combines the benefit of cross-building knowledge sharing with the flexibility of building-specific adaptation. Recent studies have shown that personalized federated learning can improve the generalizability of thermal dynamic models while preserving building-level data privacy, which is particularly valuable under heterogeneous building characteristics and non-IID operational data [\[Fed-3\]](https://doi.org/10.1109/TSG.2025.3585942).
 
 To conclude, although federated learning has so far been more widely investigated for load and energy forecasting than for detailed indoor thermal dynamics, its underlying principle is directly applicable to privacy-preserving multi-building thermal model training. Useful packages related to federated learning, along with links and introductions, are also listed below:
 | Package | Link | Typical use |
@@ -254,7 +254,7 @@ To conclude, although federated learning has so far been more widely investigate
 
 ### End-to-End Learning
 
-End-to-end learning, also called differentiable optimization or decision-oriented learning, refers to training strategies in which the model directly learns the mapping from raw or minimally processed observations to the final prediction or control-oriented output. In building applications, this paradigm has been increasingly adopted for both predictive tasks and decision-making tasks. For example, deep reinforcement learning enables a control policy to directly map observed building states to HVAC control actions, thereby bypassing manually designed control rules [\[E2E-1\]](https://doi.org/10.1016/j.apenergy.2018.11.002) [\[E2E-2\]](https://dl.acm.org/doi/10.1145/3061639.3062224).
+End-to-end learning, also called differentiable optimization or decision-oriented learning, refers to training strategies in which the model directly learns the mapping from raw or minimally processed observations to the final prediction or control-oriented output. In building applications, this paradigm has been increasingly adopted for both predictive tasks and decision-making tasks. For example, deep reinforcement learning enables a control policy to directly map observed building states to HVAC control actions, thereby bypassing manually designed control rules [\[E2E-1\]](https://doi.org/10.1109/TSG.2025.3542544) [\[E2E-2\]](https://doi.org/10.1109/TSG.2024.3445574).
 
 A standard black-box prediction model can be written as:
 
@@ -288,7 +288,7 @@ $$
 \mathcal{L}_{\text{pred}}(\theta)=\frac{1}{N}\sum_{i=1}^{N}\left\|Y_i - f_{\text{E2E}}(X_i; \theta)\right\|_2^2
 $$
 
-For control-oriented learning, the objective may include multiple terms, such as thermal comfort violation, energy consumption, and control smoothness. Moreover, end-to-end learning can also be combined with differentiable optimization layers, where the prediction model and the downstream optimization problem are jointly embedded into a single trainable pipeline. This is particularly relevant to toolchains such as `cvxpylayers`, which enable gradients to propagate through convex optimization problems [\[E2E-3\]](https://proceedings.neurips.cc/paper/2019/hash/9ce3c52fc54362e22053399d3181c638-Abstract.html).
+For control-oriented learning, the objective may include multiple terms, such as thermal comfort violation, energy consumption, and control smoothness. More importantly, the learned thermal model may be optimized in a decision-aware manner so that it better supports downstream scheduling and control tasks rather than merely minimizing one-step or multi-step prediction errors [\[E2E-1\]](https://doi.org/10.1109/TSG.2024.3445574). This is particularly relevant to toolchains such as `cvxpylayers`, which enable gradients to propagate through convex optimization problems [\[E2E-3\]](https://proceedings.neurips.cc/paper/2019/hash/9ce3c52fc54362e22053399d3181c638-Abstract.html). Such differentiable and decision-aware learning pipelines are closely related to recent efforts in building thermal modeling that explicitly consider downstream control quality during model training [[E2E-2]](https://doi.org/10.1109/TSG.2025.3542544).
 
 $$
 \mathcal{L}_{\text{control}}=\lambda_1 \mathcal{L}_{\text{comfort}}+\lambda_2 \mathcal{L}_{\text{energy}}+\lambda_3 \mathcal{L}_{\text{smoothness}}
@@ -390,9 +390,11 @@ Overall, model training for black-box building thermal dynamics should be design
 
 [[Fed-2]](https://ieeexplore.ieee.org/document/9149392) Taïk, A., & Cherkaoui, S. (2020). Electrical load forecasting using edge computing and federated learning. *IEEE International Conference on Communications (ICC)*, 1-6.
 
-[[E2E-1]](https://doi.org/10.1016/j.apenergy.2018.11.002) Vázquez-Canteli, J. R., & Nagy, Z. (2019). Reinforcement learning for demand response: A review of algorithms and modeling techniques. *Applied Energy*, 235, 1072-1089.
+[[Fed-3]](https://ieeexplore.ieee.org/abstract/document/11071939) Cui, X., Qin, D., Toubeau, J.-F., Vallée, F., & Wang, Y. (2025). Generalizable thermal dynamics modeling via personalized federated learning. *IEEE Transactions on Smart Grid*, 16(6), 4698–4711. https://doi.org/10.1109/TSG.2025.3585942
 
-[[E2E-2]](https://dl.acm.org/doi/10.1145/3061639.3062224) Wei, T., Wang, Y., & Zhu, Q. (2017). Deep reinforcement learning for building HVAC control. *Proceedings of the 54th Annual Design Automation Conference (DAC)*, Article 22.
+[[E2E-1]](https://ieeexplore.ieee.org/abstract/document/10638763) Cui, X., Liu, B., Li, Y., & Wang, Y. (2025). A “Smart Model–Then–Control” strategy for the scheduling of thermostatically controlled loads. *IEEE Transactions on Smart Grid*, 16(3), 2246–2260. https://doi.org/10.1109/TSG.2025.3542544
+
+[[E2E-2]](https://ieeexplore.ieee.org/abstract/document/10891668) Cui, X., Toubeau, J.-F., Vallée, F., & Wang, Y. (2025). Decision-oriented modeling of thermal dynamics within buildings. *IEEE Transactions on Smart Grid*, 16(1), 369–382. https://doi.org/10.1109/TSG.2024.3445574
 
 [[E2E-3]](https://proceedings.neurips.cc/paper/2019/hash/9ce3c52fc54362e22053399d3181c638-Abstract.html) Agrawal, A., Amos, B., Barratt, S., Boyd, S., Diamond, S., & Kolter, J. Z. (2019). Differentiable convex optimization layers. *Advances in Neural Information Processing Systems*, 32.
 
