@@ -204,7 +204,7 @@ However, with the increasing deployment of smart meters, building automation sys
 
 ### Federated Learning
 
-Federated learning is a distributed training paradigm that enables multiple buildings or local devices to collaboratively train a shared model without directly exchanging raw operational data. This strategy is particularly relevant for building thermal and energy modeling because sensor data may reveal sensitive information such as occupancy patterns, control schedules, and energy-use behavior. Recent studies have explored federated learning for building-side and smart-meter load forecasting, showing that privacy-preserving collaborative training can achieve competitive predictive performance while avoiding centralized data collection [\[Fed-1]\](https://doi.org/10.1016/j.ijepes.2021.107669) [\[Fed-2\]](https://ieeexplore.ieee.org/document/9149392).
+Federated learning is a distributed training paradigm that enables multiple buildings or local devices to collaboratively train a shared model without directly exchanging raw operational data. This strategy is particularly relevant for building thermal and energy modeling because sensor data may reveal sensitive information such as occupancy patterns, control schedules, and energy-use behavior. Recent studies have explored federated learning for building-side and smart-meter load forecasting, showing that privacy-preserving collaborative training can achieve competitive predictive performance while avoiding centralized data collection [\[Fed-1\]](https://doi.org/10.1016/j.ijepes.2021.107669) [\[Fed-2\]](https://ieeexplore.ieee.org/document/9149392).
 
 In a conventional centralized learning framework, data from different buildings is collected into a central server:
 
