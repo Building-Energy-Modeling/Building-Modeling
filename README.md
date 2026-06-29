@@ -146,6 +146,8 @@ $$C_i\frac{dT_i}{dt} = \sum_{j} \frac{T_j - T_i}{R_{ij}} + Q_i$$
 
 RC models can be discretized into state-space form, making them directly suitable for model predictive control, Kalman filtering, and online parameter identification. They require far fewer parameters than detailed white-box models and are computationally efficient for real-time applications.
 
+RC and grey-box models have been widely studied for building heat dynamics identification. Bacher and Madsen [\[RC-1\]](https://doi.org/10.1016/j.enbuild.2011.02.005) investigated how to identify suitable models for building heat dynamics, providing an important reference for selecting low-order thermal models based on measured data. Reynders et al. [\[RC-2\]](https://doi.org/10.1016/j.enbuild.2014.07.025) further analyzed how the quality of grey-box models and identified parameters depends on the accuracy of input and observation signals, highlighting the importance of data quality and calibration in practical RC modeling.
+
 However, the lumped-parameter assumption limits spatial resolution, and the linear heat transfer assumption may not capture nonlinear effects such as variable convection or solar radiation absorption. The choice of model order also involves a trade-off between accuracy and simplicity.
 
 ### Physics-Informed Neural Networks
@@ -396,3 +398,7 @@ Overall, model training for black-box building thermal dynamics should be design
 [\[RNN-1\]](https://doi.org/10.1016/j.enbuild.2020.110318) Bünning, F., Huber, B., Heer, P., Aboudonia, A., & Lygeros, J. (2020). Physics-informed linear recurrent neural networks for building heat dynamics. *Energy and Buildings*, 226, 110318.
 
 [\[PINN-1\]](https://doi.org/10.1016/j.enbuild.2021.110992) Drgoňa, J., Tuor, A. R., Chandan, V., & Vrabie, D. L. (2021). Physics-constrained deep learning of multi-zone building thermal dynamics. *Energy and Buildings*, 243, 110992.
+
+[\[RC-1\]](https://doi.org/10.1016/j.enbuild.2011.02.005) Bacher, P., & Madsen, H. (2011). Identifying suitable models for the heat dynamics of buildings. *Energy and Buildings*, 43(7), 1511–1522.
+
+[\[RC-2\]](https://doi.org/10.1016/j.enbuild.2014.07.025) Reynders, G., Diriken, J., & Saelens, D. (2014). Quality of grey-box models and identified parameters as function of the accuracy of input and observation signals. *Energy and Buildings*, 82, 263–274.
