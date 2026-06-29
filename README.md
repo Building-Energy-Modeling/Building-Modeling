@@ -44,6 +44,26 @@ $f(\cdot)$, ranging from traditional machine learning methods such as support ve
 
 Black-box thermal dynamic models differ mainly in the choice of function approximator used to learn the nonlinear mapping $f(\cdot)$. In building thermal modeling, the input to the model is usually constructed from historical indoor temperatures, control inputs, weather variables, occupancy-related variables, and other measurable disturbances. Depending on how temporal dependencies are represented, black-box model structures can be broadly divided into traditional machine learning models and deep learning models.
 
+### Resistor-Capacitor Models
+
+Resistor-Capacitor (RC) models abstract the building thermal dynamics into a network of lumped thermal resistances and capacitances. Instead of solving spatially distributed heat transfer equations, RC models represent the building as a small number of thermal nodes connected by thermal resistors and capacitors, capturing the dominant thermal behavior with minimal parameters.
+
+The simplest first-order RC model represents the building as a single thermal node:
+
+$$C\frac{dT_i}{dt} = \frac{T_o - T_i}{R} + Q_{HVAC} + Q_{internal}$$
+
+where $C$ is the thermal capacitance, $R$ is the thermal resistance, $T_i$ is the indoor temperature, $T_o$ is the outdoor temperature, $Q_{HVAC}$ is the HVAC heat input, and $Q_{internal}$ represents internal heat gains.
+
+Higher-order RC models (e.g., 2R1C, 3R2C) introduce additional nodes to distinguish fast-responding components (indoor air) from slow-responding components (wall thermal mass). The general $n$-node form is:
+
+$$C_i\frac{dT_i}{dt} = \sum_{j} \frac{T_j - T_i}{R_{ij}} + Q_i$$
+
+RC models can be discretized into state-space form, making them directly suitable for model predictive control, Kalman filtering, and online parameter identification. They require far fewer parameters than detailed white-box models and are computationally efficient for real-time applications.
+
+RC and grey-box models have been widely studied for building heat dynamics identification. Bacher and Madsen [\[RC-1\]](https://doi.org/10.1016/j.enbuild.2011.02.005) investigated how to identify suitable models for building heat dynamics, providing an important reference for selecting low-order thermal models based on measured data. Reynders et al. [\[RC-2\]](https://doi.org/10.1016/j.enbuild.2014.07.025) further analyzed how the quality of grey-box models and identified parameters depends on the accuracy of input and observation signals, highlighting the importance of data quality and calibration in practical RC modeling.
+
+However, the lumped-parameter assumption limits spatial resolution, and the linear heat transfer assumption may not capture nonlinear effects such as variable convection or solar radiation absorption. The choice of model order also involves a trade-off between accuracy and simplicity.
+
 ### Multi-layer Perceptron
 
 Multi-layer Perceptron (MLP) is a basic feedforward neural network structure that can approximate complex nonlinear mappings between input features and thermal responses. An MLP-based thermal dynamic model can be expressed as:
@@ -130,25 +150,7 @@ TCNs often use dilated convolutions to enlarge the receptive field, allowing the
 
 Compared with LSTM and GRU, TCNs are easier to parallelize during training and can be more stable for long sequences. They are suitable for both one-step-ahead and multi-step-ahead temperature prediction. However, the choice of receptive field, dilation factor, kernel size, and sequence length can significantly influence model performance.
 
-### Resistor-Capacitor Models
 
-Resistor-Capacitor (RC) models abstract the building thermal dynamics into a network of lumped thermal resistances and capacitances. Instead of solving spatially distributed heat transfer equations, RC models represent the building as a small number of thermal nodes connected by thermal resistors and capacitors, capturing the dominant thermal behavior with minimal parameters.
-
-The simplest first-order RC model represents the building as a single thermal node:
-
-$$C\frac{dT_i}{dt} = \frac{T_o - T_i}{R} + Q_{HVAC} + Q_{internal}$$
-
-where $C$ is the thermal capacitance, $R$ is the thermal resistance, $T_i$ is the indoor temperature, $T_o$ is the outdoor temperature, $Q_{HVAC}$ is the HVAC heat input, and $Q_{internal}$ represents internal heat gains.
-
-Higher-order RC models (e.g., 2R1C, 3R2C) introduce additional nodes to distinguish fast-responding components (indoor air) from slow-responding components (wall thermal mass). The general $n$-node form is:
-
-$$C_i\frac{dT_i}{dt} = \sum_{j} \frac{T_j - T_i}{R_{ij}} + Q_i$$
-
-RC models can be discretized into state-space form, making them directly suitable for model predictive control, Kalman filtering, and online parameter identification. They require far fewer parameters than detailed white-box models and are computationally efficient for real-time applications.
-
-RC and grey-box models have been widely studied for building heat dynamics identification. Bacher and Madsen [\[RC-1\]](https://doi.org/10.1016/j.enbuild.2011.02.005) investigated how to identify suitable models for building heat dynamics, providing an important reference for selecting low-order thermal models based on measured data. Reynders et al. [\[RC-2\]](https://doi.org/10.1016/j.enbuild.2014.07.025) further analyzed how the quality of grey-box models and identified parameters depends on the accuracy of input and observation signals, highlighting the importance of data quality and calibration in practical RC modeling.
-
-However, the lumped-parameter assumption limits spatial resolution, and the linear heat transfer assumption may not capture nonlinear effects such as variable convection or solar radiation absorption. The choice of model order also involves a trade-off between accuracy and simplicity.
 
 ### Physics-Informed Neural Networks
 
@@ -181,10 +183,12 @@ A summary of representative black-box model structures is shown below.
 
 | Model Structure | Main Characteristics | Advantages | Limitations |
 |---|---|---|---|  
+| RC Model | Lumped thermal resistance-capacitance network | Physically interpretable; computationally efficient; suitable for MPC and parameter identification | Limited spatial resolution; model order selection and parameter calibration required |
 | MLP | Feedforward neural network | Simple structure; flexible nonlinear approximation | No explicit temporal memory; depends on input window design |
 | LSTM | Recurrent neural network with memory cells | Captures long-term dependencies and thermal inertia | Requires more data; higher computational cost; low interpretability |
 | GRU | Simplified recurrent neural network | Similar to LSTM with fewer parameters; efficient training | Still difficult to interpret physically |
 | TCN | Causal and dilated temporal convolution | Parallel training; effective for long sequences | Requires careful design of receptive field and convolution settings |
+| PINN | Neural network constrained by physical equations | Combines data-driven flexibility with physical consistency; can improve generalization with limited data | Requires governing equations; training is more complex; balance between data and physics loss needs tuning |
 
 Overall, the selection of a black-box model structure depends on the available data volume, sampling resolution, prediction horizon, computational resources, and application scenario. For short-term temperature prediction with limited data, SVR or gradient boosting models may be sufficient. For large-scale time-series datasets and applications requiring multi-step prediction, LSTM, GRU, and TCN models are often more suitable.
 
