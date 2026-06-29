@@ -1,4 +1,4 @@
-<img width="733" height="1484" alt="image" src="https://github.com/user-attachments/assets/dc2ccc27-a6a9-4ff9-bce6-952e1a545487" /># Introduction
+# Introduction
 Accurate modeling of building energy systems is a cornerstone of modern smart building research, enabling applications ranging from energy consumption prediction, demand response, and optimal control. As buildings account for more than 30% of global energy consumption, developing reliable and efficient building models has become increasingly critical for achieving sustainability goals.
 
 Building modeling approaches are broadly categorized into three paradigms, each reflecting a different balance between physical interpretability and data-driven flexibility:
