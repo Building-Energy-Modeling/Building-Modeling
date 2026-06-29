@@ -243,7 +243,14 @@ $$
 
 This strategy combines the benefit of cross-building knowledge sharing with the flexibility of building-specific adaptation.
 
-To conclude, although federated learning has so far been more widely investigated for load and energy forecasting than for detailed indoor thermal dynamics, its underlying principle is directly applicable to privacy-preserving multi-building thermal model training.
+To conclude, although federated learning has so far been more widely investigated for load and energy forecasting than for detailed indoor thermal dynamics, its underlying principle is directly applicable to privacy-preserving multi-building thermal model training. Useful packages related to federated learning, along with links and introductions, are also listed below:
+| Package | Link | Typical use |
+|---|---|---|
+| `Flower` | [https://flower.ai/](https://flower.ai/) | Federated learning across multiple building clients |
+| `FedML` | [https://fedml.ai/](https://fedml.ai/) | Federated learning experimentation and deployment |
+| `TensorFlow Federated` | [https://www.tensorflow.org/federated](https://www.tensorflow.org/federated) | Federated learning in the TensorFlow ecosystem |
+| `PySyft` | [https://github.com/OpenMined/PySyft](https://github.com/OpenMined/PySyft) | Privacy-preserving ML and secure data collaboration |
+| `Opacus` | [https://opacus.ai/](https://opacus.ai/) | Differential privacy training |
 
 ### End-to-End Learning
 
