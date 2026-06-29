@@ -382,13 +382,13 @@ Overall, model training for black-box building thermal dynamics should be design
 
 [\[PINN-1\]](https://doi.org/10.1016/j.enbuild.2021.110992) Drgoňa, J., Tuor, A. R., Chandan, V., & Vrabie, D. L. (2021). Physics-constrained deep learning of multi-zone building thermal dynamics. *Energy and Buildings*, 243, 110992.
 
-[[SL-1]](https://doi.org/10.1016/j.enbuild.2015.03.045) Afram, A., & Janabi-Sharifi, F. (2015). Black-box modeling of residential HVAC system and comparison of gray-box and black-box modeling methods. *Energy and Buildings*, 94, 121-149.
+[\[SL-1\]](https://doi.org/10.1016/j.enbuild.2015.02.045) Afram, A., & Janabi-Sharifi, F. (2015). Black-box modeling of residential HVAC system and comparison of gray-box and black-box modeling methods. *Energy and Buildings*, 94, 121-149.
 
-[[SL-2]](https://www.sciencedirect.com/science/article/pii/S0378778811004108) Mustafaraj, G., Lowry, G., & Chen, J. (2011). Prediction of room temperature and relative humidity by autoregressive linear and nonlinear neural network models for an open office. *Energy and Buildings*, 43(6), 1452-1460.
+[\[SL-2\]](https://doi.org/10.1016/j.enbuild.2011.02.007) Mustafaraj, G., Lowry, G., & Chen, J. (2011). Prediction of room temperature and relative humidity by autoregressive linear and nonlinear neural network models for an open office. *Energy and Buildings*, 43(6), 1452-1460.
 
-[[Fed-1]](https://doi.org/10.1016/j.ijepes.2021.107669) Fekri, M. N., Grolinger, K., & Mir, S. (2022). Distributed load forecasting using smart meter data: Federated learning with recurrent neural networks. *International Journal of Electrical Power & Energy Systems*, 137, 107669.
+[\[Fed-1\]](https://doi.org/10.1016/j.ijepes.2021.107669) Fekri, M. N., Grolinger, K., & Mir, S. (2022). Distributed load forecasting using smart meter data: Federated learning with recurrent neural networks. *International Journal of Electrical Power & Energy Systems*, 137, 107669.
 
-[[Fed-2]](https://ieeexplore.ieee.org/document/9149392) Taïk, A., & Cherkaoui, S. (2020). Electrical load forecasting using edge computing and federated learning. *IEEE International Conference on Communications (ICC)*, 1-6.
+[\[Fed-2\]](http://ieeexplore.ieee.org/document/9148937) Taïk, A., & Cherkaoui, S. (2020). Electrical load forecasting using edge computing and federated learning. *IEEE International Conference on Communications (ICC)*, 1-6.
 
 [[Fed-3]](https://ieeexplore.ieee.org/abstract/document/11071939) Cui, X., Qin, D., Toubeau, J.-F., Vallée, F., & Wang, Y. (2025). Generalizable thermal dynamics modeling via personalized federated learning. *IEEE Transactions on Smart Grid*, 16(6), 4698–4711. https://doi.org/10.1109/TSG.2025.3585942
 
