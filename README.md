@@ -302,10 +302,16 @@ Nevertheless, end-to-end learning also has limitations. It usually requires a la
 
 Useful packages related to end-to-end learning, along with their links and introductions, are listed below:
 | Package | Link | Typical use |
-|---|---|---|
-| `Keras` | [https://keras.io/](https://keras.io/) | Rapid deep-learning prototyping |
-| `CVXPY` | [https://www.cvxpy.org/](https://www.cvxpy.org/) | Convex optimization modeling |
-| `cvxpylayers` | [https://github.com/cvxgrp/cvxpylayers](https://github.com/cvxgrp/cvxpylayers) | Differentiable convex optimization layers |
+| --- | --- | --- |
+| `CVXPY` | <https://www.cvxpy.org/> | Convex optimization modeling |
+| `cvxpylayers` | <https://github.com/cvxgrp/cvxpylayers> | Differentiable convex optimization layers |
+| `diffcp` | <https://github.com/cvxgrp/diffcp> | Differentiation through cone programs |
+| `JAXopt` | <https://github.com/google/jaxopt> | Differentiable optimization in JAX |
+| `qpth` | <https://github.com/locuslab/qpth> | Differentiable quadratic programming layers |
+| `Theseus` | <https://github.com/facebookresearch/theseus> | Differentiable nonlinear optimization |
+| `TorchOpt` | <https://github.com/metaopt/torchopt> | Differentiable optimization and meta-learning |
+| `DDN` | <https://github.com/anucvml/ddn> | Deep declarative networks |
+| `OTT-JAX` | <https://github.com/ott-jax/ott> | Differentiable optimal transport |
 
 ### Explainable AI
 
