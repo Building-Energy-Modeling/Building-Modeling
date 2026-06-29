@@ -247,7 +247,7 @@ To conclude, although federated learning has so far been more widely investigate
 
 ### End-to-End Learning
 
-End-to-end learning refers to training strategies in which the model directly learns the mapping from raw or minimally processed observations to the final prediction or control-oriented output. In building applications, this paradigm has been increasingly adopted for both predictive tasks and decision-making tasks. For example, deep reinforcement learning enables a control policy to directly map observed building states to HVAC control actions, thereby bypassing manually designed control rules [[E2E-1]](https://doi.org/10.1016/j.apenergy.2018.11.002) [[E2E-2]](https://dl.acm.org/doi/10.1145/3061639.3062224).
+End-to-end learning refers to training strategies in which the model directly learns the mapping from raw or minimally processed observations to the final prediction or control-oriented output. In building applications, this paradigm has been increasingly adopted for both predictive tasks and decision-making tasks. For example, deep reinforcement learning enables a control policy to directly map observed building states to HVAC control actions, thereby bypassing manually designed control rules [\[E2E-1]\](https://doi.org/10.1016/j.apenergy.2018.11.002) [\[E2E-2]\](https://dl.acm.org/doi/10.1145/3061639.3062224).
 
 A standard black-box prediction model can be written as:
 
@@ -260,9 +260,7 @@ where $X_k$ contains historical indoor temperature, control inputs, weather dist
 In an end-to-end sequence prediction setting, the model may directly map a historical input sequence to a future temperature trajectory:
 
 $$
-[\hat{T}_{k+1}, \hat{T}_{k+2}, \dots, \hat{T}_{k+H}]
-=
-f_{\text{E2E}}([x_{k-n+1}, x_{k-n+2}, \dots, x_k]; \theta)
+[\hat{T}_{k+1}, \hat{T}_{k+2}, \dots, \hat{T}_{k+H}]=f_{\text{E2E}}([x_{k-n+1}, x_{k-n+2}, \dots, x_k]; \theta)
 $$
 
 where $n$ is the input window length and $H$ is the prediction horizon.
@@ -280,21 +278,13 @@ where $s_k$ is the observed state, including indoor temperature, weather forecas
 For purely predictive tasks, the end-to-end training objective is usually based on prediction error:
 
 $$
-\mathcal{L}_{\text{pred}}(\theta)
-=
-\frac{1}{N}\sum_{i=1}^{N}\left\|Y_i - f_{\text{E2E}}(X_i; \theta)\right\|_2^2
+\mathcal{L}_{\text{pred}}(\theta)=\frac{1}{N}\sum_{i=1}^{N}\left\|Y_i - f_{\text{E2E}}(X_i; \theta)\right\|_2^2
 $$
 
-For control-oriented learning, the objective may include multiple terms, such as thermal comfort violation, energy consumption, and control smoothness. Moreover, end-to-end learning can also be combined with differentiable optimization layers, where the prediction model and the downstream optimization problem are jointly embedded into a single trainable pipeline. This is particularly relevant to toolchains such as `cvxpylayers`, which enable gradients to propagate through convex optimization problems [[E2E-3]](https://proceedings.neurips.cc/paper/2019/hash/9ce3c52fc54362e22053399d3181c638-Abstract.html).
+For control-oriented learning, the objective may include multiple terms, such as thermal comfort violation, energy consumption, and control smoothness. Moreover, end-to-end learning can also be combined with differentiable optimization layers, where the prediction model and the downstream optimization problem are jointly embedded into a single trainable pipeline. This is particularly relevant to toolchains such as `cvxpylayers`, which enable gradients to propagate through convex optimization problems [\[E2E-3]\](https://proceedings.neurips.cc/paper/2019/hash/9ce3c52fc54362e22053399d3181c638-Abstract.html).
 
 $$
-\mathcal{L}_{\text{control}}
-=
-\lambda_1 \mathcal{L}_{\text{comfort}}
-+
-\lambda_2 \mathcal{L}_{\text{energy}}
-+
-\lambda_3 \mathcal{L}_{\text{smoothness}}
+\mathcal{L}_{\text{control}}=\lambda_1 \mathcal{L}_{\text{comfort}}+\lambda_2 \mathcal{L}_{\text{energy}}+\lambda_3 \mathcal{L}_{\text{smoothness}}
 $$
 
 where $\lambda_1$, $\lambda_2$, and $\lambda_3$ are weighting coefficients.
