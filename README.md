@@ -54,7 +54,9 @@ $$
 
 where $\theta$ denotes the trainable parameters of the neural network; the feature vector $x_k$ usually includes lagged indoor temperatures, HVAC control variables, weather disturbances, occupancy indicators, and time-related features.
 
-A typical MLP consists of an input layer, several hidden layers with nonlinear activation functions, and an output layer. The hidden layers learn nonlinear combinations of input variables, allowing the model to represent complex thermal response patterns.
+Early studies have demonstrated the effectiveness of neural network models for building thermal prediction. Mustafaraj et al. [MLP-1] compared autoregressive linear models with nonlinear neural network models for predicting room temperature and relative humidity in an open office, showing that neural networks can capture nonlinear indoor thermal dynamics more effectively than linear autoregressive models. Ferreira et al. [MLP-2] further applied neural-network-based predictive control to public buildings, demonstrating the potential of neural network models for both thermal comfort prediction and energy-saving control applications.
+
+A typical MLP consists of an input layer, several hidden layers with nonlinear activation functions, and an output layer. The hidden layers learn nonlinear combinations of input variables, allowing the model to represent complex thermal response patterns. For example
 
 MLP models are simple, flexible, and easy to implement. They are suitable when the thermal dynamics can be approximated from a fixed-length input window. However, because MLPs do not contain an explicit recurrent or temporal mechanism, the temporal dependency of building thermal dynamics must be encoded through handcrafted lagged features. Therefore, the prediction performance of MLP models is highly affected by the choice of input window length and feature construction strategy.
 
@@ -385,3 +387,7 @@ A summary of these strategies is shown below.
 
 Overall, model training for black-box building thermal dynamics should be designed according to the target application. For single-building prediction with sufficient historical data, centralized supervised learning is usually adequate. For large-scale deployment across multiple buildings with privacy constraints, federated learning provides an attractive solution. For prediction or control tasks with rich sensor data, end-to-end learning can capture complex nonlinear and temporal relationships. Finally, explainable AI should be incorporated to improve model transparency, validate physical plausibility, and increase trust in practical building energy applications.
 
+## Reference
+[MLP-1] Mustafaraj, G., Lowry, G., & Chen, J. (2011). Prediction of room temperature and relative humidity by autoregressive linear and nonlinear neural network models for an open office. *Energy and Buildings*, 43(6), 1452–1460. https://doi.org/10.1016/j.enbuild.2011.02.007
+
+[MLP-2] Ferreira, P. M., Ruano, A. E., Silva, S., & Conceição, E. Z. E. (2012). Neural networks based predictive control for thermal comfort and energy savings in public buildings. *Energy and Buildings*, 55, 238–251. https://doi.org/10.1016/j.enbuild.2012.08.002
