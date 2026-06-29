@@ -54,7 +54,7 @@ $$
 
 where $\theta$ denotes the trainable parameters of the neural network; the feature vector $x_k$ usually includes lagged indoor temperatures, HVAC control variables, weather disturbances, occupancy indicators, and time-related features.
 
-Early studies have demonstrated the effectiveness of neural network models for building thermal prediction. Mustafaraj et al. [\[MLP-1\]](https://doi.org/10.1016/j.enbuild.2011.02.007) compared autoregressive linear models with nonlinear neural network models for predicting room temperature and relative humidity in an open office, showing that neural networks can capture nonlinear indoor thermal dynamics more effectively than linear autoregressive models. Ferreira et al. [\[MLP-2]\](https://doi.org/10.1016/j.enbuild.2012.08.002) further applied neural-network-based predictive control to public buildings, demonstrating the potential of neural network models for both thermal comfort prediction and energy-saving control applications.
+Early studies have demonstrated the effectiveness of neural network models for building thermal prediction. Mustafaraj et al. [\[MLP-1\]](https://doi.org/10.1016/j.enbuild.2011.02.007) compared autoregressive linear models with nonlinear neural network models for predicting room temperature and relative humidity in an open office, showing that neural networks can capture nonlinear indoor thermal dynamics more effectively than linear autoregressive models. Ferreira et al. [\[MLP-2\]](https://doi.org/10.1016/j.enbuild.2012.08.002) further applied neural-network-based predictive control to public buildings, demonstrating the potential of neural network models for both thermal comfort prediction and energy-saving control applications.
 
 A typical MLP consists of an input layer, several hidden layers with nonlinear activation functions, and an output layer. The hidden layers learn nonlinear combinations of input variables, allowing the model to represent complex thermal response patterns. 
 
@@ -75,6 +75,8 @@ T_{k+1} = g(h_k)
 $$
 
 where $h_k$ is the hidden state, $x_k$ is the input vector at time step $k$, and $\phi(\cdot)$ and $g(\cdot)$ are nonlinear functions learned from data.
+
+Recurrent neural network structures have also been adapted specifically for building heat dynamics. Bünning et al. [\[RNN-1\]](https://doi.org/10.1016/j.enbuild.2020.110318) proposed physics-informed linear recurrent neural networks for building heat dynamics, combining recurrent sequence modeling with physical prior knowledge. Their work shows that recurrent architectures can be used not only as pure black-box predictors, but also as compact and physically informed models for capturing building thermal evolution.
 
 Basic RNNs can model temporal dependencies, but they often suffer from vanishing or exploding gradient problems when learning long-term dependencies. Since building thermal dynamics may involve delayed responses over several hours, more advanced recurrent architectures such as LSTM and GRU are commonly preferred.
 
@@ -160,6 +162,8 @@ $$\mathcal{L}_{\text{physics}}(\theta) = \frac{1}{N_r}\sum_{k=1}^{N_r} \left|\fr
 
 where the derivatives are computed via automatic differentiation and $\lambda$ controls the balance between data fitting and physical consistency.
 
+Physics-informed and physics-constrained learning has been increasingly explored for building thermal dynamics. Drgoňa et al. [\[PINN-1\]](https://doi.org/10.1016/j.enbuild.2021.110992) developed a physics-constrained deep learning framework for multi-zone building thermal dynamics, demonstrating that physical constraints can improve model consistency and generalization in complex building systems.
+
 PINNs can generalize better to unseen operating conditions than pure black-box models because the physics constraints prevent physically implausible predictions. They also require less training data, since the governing equations provide additional information. The learned parameters may retain physical meaning, offering partial interpretability.
 
 However, PINNs are more computationally expensive to train due to derivative computation, and the regularization weight $\lambda$ requires careful tuning. They also require the user to specify the governing equations explicitly, which limits their applicability when the underlying physics is uncertain or highly complex.
@@ -174,9 +178,7 @@ Deep learning models, such as MLP, LSTM, GRU, and TCN, provide stronger capabili
 A summary of representative black-box model structures is shown below.
 
 | Model Structure | Main Characteristics | Advantages | Limitations |
-|---|---|---|---|
-| SVR | Kernel-based nonlinear regression | Effective for small datasets; robust prediction | Sensitive to kernel and hyperparameters; temporal features need manual design |
-| Random Forest / Gradient Boosting Trees | Ensemble of decision trees | Strong performance on tabular data; limited feature interpretability | Weak extrapolation; temporal dependency requires lagged features |
+|---|---|---|---|  
 | MLP | Feedforward neural network | Simple structure; flexible nonlinear approximation | No explicit temporal memory; depends on input window design |
 | LSTM | Recurrent neural network with memory cells | Captures long-term dependencies and thermal inertia | Requires more data; higher computational cost; low interpretability |
 | GRU | Simplified recurrent neural network | Similar to LSTM with fewer parameters; efficient training | Still difficult to interpret physically |
@@ -186,7 +188,7 @@ Overall, the selection of a black-box model structure depends on the available d
 
 ## Model Training
 
-After selecting the model structure, the next step is to determine how the black-box thermal dynamic model is trained. In building thermal modeling, the training strategy is not only related to prediction accuracy, but also affects data availability, model generalization, privacy protection, deployment scalability, and interpretability.
+After selecting the model structure, the next step is to determine how the black-box thermal dynamic model is trained. In building thermal modeling, the training strategy is not only related to prediction accuracy but also affects data availability, model generalization, privacy protection, deployment scalability, and interpretability.
 
 Traditional black-box models are usually trained in a centralized supervised learning manner, where operational data from one or multiple buildings are collected and stored in a central database. The model is then optimized to minimize the discrepancy between predicted and measured thermal responses. However, with the increasing deployment of smart meters, building automation systems, and IoT sensors, new training strategies have become important for large-scale building thermal modeling. This section discusses three representative strategies: federated learning, end-to-end learning, and explainable AI.
 
@@ -391,3 +393,6 @@ Overall, model training for black-box building thermal dynamics should be design
 [MLP-1] Mustafaraj, G., Lowry, G., & Chen, J. (2011). Prediction of room temperature and relative humidity by autoregressive linear and nonlinear neural network models for an open office. *Energy and Buildings*, 43(6), 1452–1460. https://doi.org/10.1016/j.enbuild.2011.02.007
 
 [MLP-2] Ferreira, P. M., Ruano, A. E., Silva, S., & Conceição, E. Z. E. (2012). Neural networks based predictive control for thermal comfort and energy savings in public buildings. *Energy and Buildings*, 55, 238–251. https://doi.org/10.1016/j.enbuild.2012.08.002
+[\[RNN-1\]](https://doi.org/10.1016/j.enbuild.2020.110318) Bünning, F., Huber, B., Heer, P., Aboudonia, A., & Lygeros, J. (2020). Physics-informed linear recurrent neural networks for building heat dynamics. *Energy and Buildings*, 226, 110318.
+
+[\[PINN-1\]](https://doi.org/10.1016/j.enbuild.2021.110992) Drgoňa, J., Tuor, A. R., Chandan, V., & Vrabie, D. L. (2021). Physics-constrained deep learning of multi-zone building thermal dynamics. *Energy and Buildings*, 243, 110992.
