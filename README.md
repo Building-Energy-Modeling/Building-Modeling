@@ -196,15 +196,15 @@ Overall, the selection of a black-box model structure depends on the available d
 
 After selecting the model structure, the next step is to determine how the black-box thermal dynamic model is trained. In building thermal modeling, the training strategy is not only related to prediction accuracy but also affects data availability, model generalization, privacy protection, deployment scalability, and interpretability.
 
-Most black-box thermal dynamic models in buildings are trained in a supervised learning manner, where historical operational measurements are organized into input-output pairs and the model parameters are optimized by minimizing prediction errors. This formulation is widely adopted in data-driven HVAC and indoor environment modeling, where the objective is to learn the mapping from past thermal states, control inputs, and disturbances to future thermal responses [\[SL-1\]](https://doi.org/10.1016/j.enbuild.2015.03.045) [\[SL-2\]](https://www.sciencedirect.com/science/article/pii/S0378778811004108).
+Most black-box thermal dynamic models in buildings are trained in a supervised learning manner, where historical operational measurements are organized into input-output pairs and the model parameters are optimized by minimizing prediction errors. This formulation is widely adopted in data-driven HVAC and indoor environment modeling, where the objective is to learn the mapping from past thermal states, control inputs, and disturbances to future thermal responses [\[SL-1\]](https://doi.org/10.1016/j.enbuild.2015.02.045) [\[SL-2\]](https://www.sciencedirect.com/science/article/pii/S0378778811004108).
 
-For indoor temperature prediction, supervised learning models are often constructed using autoregressive inputs, exogenous variables, or historical time windows. Such formulations have been widely used in neural-network-based room temperature prediction and black-box HVAC modeling [\[SL-1\]](https://doi.org/10.1016/j.enbuild.2015.03.045) [\[SL-2\]](https://www.sciencedirect.com/science/article/pii/S0378778811004108).
+For indoor temperature prediction, supervised learning models are often constructed using autoregressive inputs, exogenous variables, or historical time windows. Such formulations have been widely used in neural-network-based room temperature prediction and black-box HVAC modeling [\[SL-1\]](https://doi.org/10.1016/j.enbuild.2015.03.045) [\[SL-2\]](https://doi.org/10.1016/j.enbuild.2011.02.007).
 
 However, with the increasing deployment of smart meters, building automation systems, and IoT sensors, new training strategies have become important for large-scale building thermal modeling. This section discusses three representative strategies: federated learning, end-to-end learning, and explainable AI.
 
 ### Federated Learning
 
-Federated learning is a distributed training paradigm that enables multiple buildings or local devices to collaboratively train a shared model without directly exchanging raw operational data. This strategy is particularly relevant for building thermal and energy modeling because sensor data may reveal sensitive information such as occupancy patterns, control schedules, and energy-use behavior. Recent studies have explored federated learning for building-side and smart-meter load forecasting, showing that privacy-preserving collaborative training can achieve competitive predictive performance while avoiding centralized data collection [\[Fed-1\]](https://doi.org/10.1016/j.ijepes.2021.107669) [\[Fed-2\]](https://ieeexplore.ieee.org/document/9149392).
+Federated learning is a distributed training paradigm that enables multiple buildings or local devices to collaboratively train a shared model without directly exchanging raw operational data. This strategy is particularly relevant for building thermal and energy modeling because sensor data may reveal sensitive information such as occupancy patterns, control schedules, and energy-use behavior. Recent studies have explored federated learning for building-side and smart-meter load forecasting, showing that privacy-preserving collaborative training can achieve competitive predictive performance while avoiding centralized data collection [\[Fed-1\]](https://doi.org/10.1016/j.ijepes.2021.107669) [\[Fed-2\]](http://ieeexplore.ieee.org/document/9148937).
 
 In a conventional centralized learning framework, data from different buildings is collected into a central server:
 
@@ -390,11 +390,11 @@ Overall, model training for black-box building thermal dynamics should be design
 
 [\[Fed-2\]](http://ieeexplore.ieee.org/document/9148937) Taïk, A., & Cherkaoui, S. (2020). Electrical load forecasting using edge computing and federated learning. *IEEE International Conference on Communications (ICC)*, 1-6.
 
-[[Fed-3]](https://ieeexplore.ieee.org/abstract/document/11071939) Cui, X., Qin, D., Toubeau, J.-F., Vallée, F., & Wang, Y. (2025). Generalizable thermal dynamics modeling via personalized federated learning. *IEEE Transactions on Smart Grid*, 16(6), 4698–4711. https://doi.org/10.1109/TSG.2025.3585942
+[[Fed-3]](https://ieeexplore.ieee.org/abstract/document/11071939) Cui, X., Qin, D., Toubeau, J.-F., Vallée, F., & Wang, Y. (2025). Generalizable thermal dynamics modeling via personalized federated learning. *IEEE Transactions on Smart Grid*, 16(6), 4698–4711.
 
-[[E2E-1]](https://ieeexplore.ieee.org/abstract/document/10638763) Cui, X., Liu, B., Li, Y., & Wang, Y. (2025). A “Smart Model–Then–Control” strategy for the scheduling of thermostatically controlled loads. *IEEE Transactions on Smart Grid*, 16(3), 2246–2260. https://doi.org/10.1109/TSG.2025.3542544
+[[E2E-1]](https://ieeexplore.ieee.org/abstract/document/10638763) Cui, X., Liu, B., Li, Y., & Wang, Y. (2025). A “Smart Model–Then–Control” strategy for the scheduling of thermostatically controlled loads. *IEEE Transactions on Smart Grid*, 16(3), 2246–2260.
 
-[[E2E-2]](https://ieeexplore.ieee.org/abstract/document/10891668) Cui, X., Toubeau, J.-F., Vallée, F., & Wang, Y. (2025). Decision-oriented modeling of thermal dynamics within buildings. *IEEE Transactions on Smart Grid*, 16(1), 369–382. https://doi.org/10.1109/TSG.2024.3445574
+[[E2E-2]](https://ieeexplore.ieee.org/abstract/document/10891668) Cui, X., Toubeau, J.-F., Vallée, F., & Wang, Y. (2025). Decision-oriented modeling of thermal dynamics within buildings. *IEEE Transactions on Smart Grid*, 16(1), 369–382.
 
 [[E2E-3]](https://proceedings.neurips.cc/paper/2019/hash/9ce3c52fc54362e22053399d3181c638-Abstract.html) Agrawal, A., Amos, B., Barratt, S., Boyd, S., Diamond, S., & Kolter, J. Z. (2019). Differentiable convex optimization layers. *Advances in Neural Information Processing Systems*, 32.
 
