@@ -231,7 +231,7 @@ $$
 
 where $\theta_m^{(r+1)}$ denotes the locally updated model parameters from building $m$, $N_m$ is the number of local samples, and $N = \sum_{m=1}^{M}N_m$ is the total number of samples across all participating buildings.
 
-For building thermal dynamics, federated learning has several advantages. First, it improves data privacy because raw sensor data do not need to leave the building. Second, it enables collaborative model training across a large number of buildings, which can improve generalization compared with training on a single building. Third, it is suitable for large-scale deployment scenarios, such as campus buildings, commercial building portfolios, and geographically distributed smart building systems [\[Fed-1\]](https://doi.org/10.1016/j.ijepes.2021.107669).
+For building thermal dynamics, federated learning has several advantages. First, it improves data privacy because raw sensor data does not need to leave the building. Second, it enables collaborative model training across a large number of buildings, which can improve generalization compared with training on a single building. Third, it is suitable for large-scale deployment scenarios, such as campus buildings, commercial building portfolios, and geographically distributed smart building systems [\[Fed-1\]](https://doi.org/10.1016/j.ijepes.2021.107669).
 
 However, federated learning also introduces several challenges. Building datasets are often non-independent and identically distributed (non-IID), because different buildings have different thermal properties, HVAC systems, occupancy schedules, and climate conditions. As a result, local model updates may be inconsistent, and the global model may not perform equally well for all buildings. Communication cost is another important issue, especially when deep learning models with many parameters are used. In addition, missing data, sensor faults, different sampling rates, and heterogeneous feature availability can further complicate federated training.
 
@@ -254,7 +254,7 @@ To conclude, although federated learning has so far been more widely investigate
 
 ### End-to-End Learning
 
-End-to-end learning refers to training strategies in which the model directly learns the mapping from raw or minimally processed observations to the final prediction or control-oriented output. In building applications, this paradigm has been increasingly adopted for both predictive tasks and decision-making tasks. For example, deep reinforcement learning enables a control policy to directly map observed building states to HVAC control actions, thereby bypassing manually designed control rules [\[E2E-1\]](https://doi.org/10.1016/j.apenergy.2018.11.002) [\[E2E-2\]](https://dl.acm.org/doi/10.1145/3061639.3062224).
+End-to-end learning, also called differentiable optimization or decision-oriented learning, refers to training strategies in which the model directly learns the mapping from raw or minimally processed observations to the final prediction or control-oriented output. In building applications, this paradigm has been increasingly adopted for both predictive tasks and decision-making tasks. For example, deep reinforcement learning enables a control policy to directly map observed building states to HVAC control actions, thereby bypassing manually designed control rules [\[E2E-1\]](https://doi.org/10.1016/j.apenergy.2018.11.002) [\[E2E-2\]](https://dl.acm.org/doi/10.1145/3061639.3062224).
 
 A standard black-box prediction model can be written as:
 
